@@ -1,0 +1,23 @@
+{
+  "name": "test",
+  "version": "1.0.0",
+  "description": "test app",
+  "main": "index.js",
+  "scripts":{
+    "start": "node index.js",
+    "server": "nodemon index.js",
+    "client": "npm run start --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
+  },
+  "repository": "https://github.com/Drillibit/test_app.git",
+  "author": "Ivan Baranov",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.3",
+    "mongoose": "^5.1.6"
+  },
+  "devDependencies": {
+    "concurrently": "^3.6.0"
+  }
+}
