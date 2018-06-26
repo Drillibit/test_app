@@ -8,7 +8,6 @@ export default class MainForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      tasks: [],
       taskName: '',
       taskDescription: '',
       taskImportance: '',

@@ -29,8 +29,23 @@ export const startAddTask = (taskData = {}) => {
   };
 };
 
-export const taskDone = (_id, task) => ({
-  type: 'TASK_DONE',
+export const editTask = (_id, updates) => ({
+  type: 'EDIT_TASK',
   _id,
-  task
+  updates
 });
+
+export const startEditTask = (_id, updates) => {
+  return async dispatch => {
+    const task = {
+      taskName: updates.taskName,
+      taskDescription: updates.taskDescription,
+      taskImportance: updates.taskImportance,
+      deadline: updates.deadline,
+      startDate: updates.startDate,
+      taskDone: updates.taskDone
+    };
+    let res = await axios.put(`/api/edit_task/${_id}`, task);
+    dispatch(editTask(_id, { ...res.data }));
+  };
+};

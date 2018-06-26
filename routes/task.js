@@ -26,4 +26,20 @@ module.exports = app => {
     const tasks = await Task.find({});
     res.send(tasks);
   });
+
+  app.put('/api/edit_task/:id', async (req, res) => {
+    const task = await Task.findOne({ _id: req.params.id });
+    (task.taskName = req.body.taskName || task.taskName),
+      (task.taskDescription = req.body.taskDescription || task.taskDescription),
+      (task.taskImportance = req.body.taskImportance || task.taskImportance),
+      (task.deadline = req.body.deadline || task.deadline),
+      (task.startDate = req.body.startDate || task.startDate),
+      (task.taskDone = req.body.taskDone || task.taskDone);
+    try {
+      await task.save();
+      res.send(task);
+    } catch (err) {
+      res.status(422).send(err);
+    }
+  });
 };
