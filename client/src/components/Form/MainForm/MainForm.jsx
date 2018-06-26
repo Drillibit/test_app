@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
 import moment from 'moment';
 import { SingleDatePicker } from 'react-dates';
-import { addTask } from '../../actions/task';
-import { connect } from 'react-redux';
 import 'react-dates/lib/css/_datepicker.css';
 import './Main.css';
 
-class Main extends Component {
+export default class MainForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -61,7 +59,7 @@ class Main extends Component {
         deadline: this.state.deadline.valueOf(),
         startDate: this.state.startDate.valueOf()
       };
-      this.props.dispatch(addTask(task));
+      this.props.onSubmit(task);
     }
   };
   render() {
@@ -123,5 +121,3 @@ class Main extends Component {
     );
   }
 }
-
-export default connect()(Main);
