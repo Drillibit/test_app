@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
-import { addTask } from '../../../actions/task';
+import { startAddTask } from '../../../actions/task';
 import MainForm from '../MainForm';
 
 const AddTask = props => {
@@ -8,7 +8,7 @@ const AddTask = props => {
     <Fragment>
       <MainForm
         onSubmit={task => {
-          props.dispatch(addTask(task));
+          props.dispatch(startAddTask(task));
         }}
       />
     </Fragment>
