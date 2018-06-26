@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import moment from 'moment';
 import { SingleDatePicker } from 'react-dates';
+import { addTask } from '../../actions/task';
+import { connect } from 'react-redux';
 import 'react-dates/lib/css/_datepicker.css';
 import './Main.css';
 
-export default class Main extends Component {
+class Main extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -12,11 +14,12 @@ export default class Main extends Component {
       taskName: '',
       taskDescription: '',
       taskImportance: '',
-      deadline: '',
       startDate: moment(),
+      deadline: moment(),
       taskDone: false,
       edit: false,
-      dateFocused: false
+      dateFocused: false,
+      error: ''
     };
   }
 
@@ -29,16 +32,38 @@ export default class Main extends Component {
     });
   };
 
-  onDateChange = startDate => {
-    this.setState(() => ({
-      startDate
-    }));
+  onDateChange = deadline => {
+    if (deadline) {
+      this.setState(() => ({
+        deadline
+      }));
+    }
   };
 
   onFocusChange = ({ focused }) => {
     this.setState(() => ({ dateFocused: focused }));
   };
 
+  onSubmit = e => {
+    e.preventDefault();
+    if (!this.state.taskDescription || !this.state.taskName) {
+      this.setState({
+        error: 'Название и описание задачи должны быть указаны.'
+      });
+    } else {
+      this.setState({
+        error: ''
+      });
+      const task = {
+        taskName: this.state.taskName,
+        taskDescription: this.state.taskDescription,
+        taskImportance: this.state.taskImportance,
+        deadline: this.state.deadline.valueOf(),
+        startDate: this.state.startDate.valueOf()
+      };
+      this.props.dispatch(addTask(task));
+    }
+  };
   render() {
     const {
       taskName,
@@ -46,14 +71,13 @@ export default class Main extends Component {
       taskImportance,
       taskDone,
       deadline,
-      startDate,
       dateFocused
     } = this.state;
 
     return (
       <div className="">
         <p>Task App Main Component</p>
-        <form>
+        <form onSubmit={this.onSubmit}>
           <label htmlFor="taskName">Задача</label>
           <input
             type="text"
@@ -87,14 +111,17 @@ export default class Main extends Component {
           />
           <label htmlFor="deadline">Срок выполнения</label>
           <SingleDatePicker
-            date={startDate}
+            date={deadline}
             onDateChange={this.onDateChange}
             focused={dateFocused}
             onFocusChange={this.onFocusChange}
             numberOfMonths={1}
           />
+          <button>Submit</button>
         </form>
       </div>
     );
   }
 }
+
+export default connect()(Main);
