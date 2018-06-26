@@ -57,7 +57,8 @@ export default class MainForm extends Component {
         taskDescription: this.state.taskDescription,
         taskImportance: this.state.taskImportance,
         deadline: this.state.deadline.valueOf(),
-        startDate: this.state.startDate.valueOf()
+        startDate: this.state.startDate.valueOf(),
+        taskDone: this.state.taskDone
       };
       this.props.onSubmit(task);
     }
