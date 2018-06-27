@@ -5,7 +5,7 @@ import SingleTask from './SingleTask';
 const TasksPage = ({ tasks }) => {
   return (
     <div className="task_container">
-      {tasks.map((task, index) => <SingleTask key={index} {...task} />)}
+      {tasks.map((task, index) => <SingleTask key={task._id} {...task} />)}
     </div>
   );
 };

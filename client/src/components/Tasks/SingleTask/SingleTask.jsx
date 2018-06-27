@@ -1,16 +1,19 @@
-import React, { PureComponent } from 'react';
+import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { startEditTask } from '../../../actions/task';
+import RenderTask from './RenderTask';
+import MainFrom from '../../Form/MainForm';
 import moment from 'moment';
 
 let currentDate = moment().valueOf();
 
-class SingleTask extends PureComponent {
+class SingleTask extends Component {
   constructor(props) {
     super(props);
     this.state = {
       taskComplete: this.props.taskDone,
-      taskMissed: moment(currentDate).isAfter(this.props.deadline)
+      taskMissed: moment(currentDate).isAfter(this.props.deadline),
+      editTask: false
     };
   }
 
@@ -37,23 +40,31 @@ class SingleTask extends PureComponent {
     };
     this.props.dispatch(startEditTask(this.props._id, updates));
   };
+
+  handleEdit = e => {
+    this.setState(() => ({
+      editTask: !this.state.editTask
+    }));
+  };
   render() {
-    const { taskName, taskDescription, deadline } = this.props;
-    const { taskComplete, taskMissed } = this.state;
-    let date = new Date(deadline).toLocaleDateString().toString();
+    const toRender = { ...this.props, ...this.state };
 
     return (
       <div className="single_task">
-        <h3>{taskName}</h3>
-        {taskMissed ? <p>Срок истёк</p> : <p>Задача актульна</p>}
-        <p>{taskDescription}</p>
-        <p>{date}</p>
-        <input
-          name="taskComplete"
-          type="checkbox"
-          checked={taskComplete}
-          onChange={this.handleTaskComplete}
-        />
+        {!this.state.editTask ? (
+          <RenderTask {...toRender} handleEdit={this.handleEdit} />
+        ) : (
+          <Fragment>
+            <MainFrom
+              {...toRender}
+              button={<button onClick={this.handleEdit}>Назад</button>}
+              done={this.handleEdit}
+              onSubmit={task => {
+                this.props.dispatch(startEditTask(toRender._id, task));
+              }}
+            />
+          </Fragment>
+        )}
       </div>
     );
   }

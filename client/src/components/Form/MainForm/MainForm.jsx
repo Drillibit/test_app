@@ -8,18 +8,17 @@ export default class MainForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      taskName: '',
-      taskDescription: '',
-      taskImportance: '',
-      startDate: moment(),
-      deadline: moment(),
-      taskDone: false,
+      taskName: props.taskName ? props.taskName : '',
+      taskDescription: props.taskDescription ? props.taskDescription : '',
+      taskImportance: props.taskImportance ? props.taskImportance : '',
+      startDate: props.startDate ? moment(props.startDate) : moment(),
+      deadline: props.deadline ? moment(props.deadline) : moment(),
+      taskDone: props.taskDone !== false ? true : false,
       edit: false,
       dateFocused: false,
       error: ''
     };
   }
-
   onTextFieldChange = e => {
     const { name } = e.target;
     let value =
@@ -60,6 +59,7 @@ export default class MainForm extends Component {
         taskDone: this.state.taskDone
       };
       this.props.onSubmit(task);
+      this.props.done && this.props.done();
     }
   };
   render() {
@@ -116,6 +116,7 @@ export default class MainForm extends Component {
             numberOfMonths={1}
           />
           <button>Submit</button>
+          {this.props.button}
         </form>
       </div>
     );
