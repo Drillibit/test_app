@@ -34,7 +34,10 @@ module.exports = app => {
       (task.taskImportance = req.body.taskImportance || task.taskImportance),
       (task.deadline = req.body.deadline || task.deadline),
       (task.startDate = req.body.startDate || task.startDate),
-      (task.taskDone = req.body.taskDone || task.taskDone);
+      (task.taskDone =
+        req.body.taskDone !== task.taskDone
+          ? req.body.taskDone
+          : task.taskDone);
     try {
       await task.save();
       res.send(task);
