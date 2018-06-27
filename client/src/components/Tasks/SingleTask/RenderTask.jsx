@@ -1,11 +1,15 @@
 import React, { Fragment } from 'react';
+import { connect } from 'react-redux';
+import { startRemoveTask } from '../../../actions/task';
 
 const RenderTask = ({
   taskName,
   taskMissed,
   taskDescription,
   deadline,
-  handleEdit
+  handleEdit,
+  dispatch,
+  _id
 }) => {
   let date = new Date(deadline).toLocaleDateString().toString();
   return (
@@ -21,8 +25,15 @@ const RenderTask = ({
         onChange={this.handleTaskComplete}
       />
       <button onClick={handleEdit}>Редактировать</button>
+      <button
+        onClick={() => {
+          dispatch(startRemoveTask({ _id }));
+        }}
+      >
+        Удалить
+      </button>
     </Fragment>
   );
 };
 
-export default RenderTask;
+export default connect()(RenderTask);

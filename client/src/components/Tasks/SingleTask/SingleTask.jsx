@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { startEditTask } from '../../../actions/task';
 import RenderTask from './RenderTask';
@@ -42,10 +42,12 @@ class SingleTask extends Component {
   };
 
   handleEdit = e => {
+    e.preventDefault();
     this.setState(() => ({
       editTask: !this.state.editTask
     }));
   };
+
   render() {
     const toRender = { ...this.props, ...this.state };
 
@@ -54,16 +56,14 @@ class SingleTask extends Component {
         {!this.state.editTask ? (
           <RenderTask {...toRender} handleEdit={this.handleEdit} />
         ) : (
-          <Fragment>
-            <MainFrom
-              {...toRender}
-              button={<button onClick={this.handleEdit}>Назад</button>}
-              done={this.handleEdit}
-              onSubmit={task => {
-                this.props.dispatch(startEditTask(toRender._id, task));
-              }}
-            />
-          </Fragment>
+          <MainFrom
+            {...toRender}
+            button={<button onClick={this.handleEdit}>Назад</button>}
+            done={this.handleEdit}
+            onSubmit={task => {
+              this.props.dispatch(startEditTask(toRender._id, task));
+            }}
+          />
         )}
       </div>
     );

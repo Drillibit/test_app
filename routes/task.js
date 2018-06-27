@@ -45,4 +45,9 @@ module.exports = app => {
       res.status(422).send(err);
     }
   });
+
+  app.delete('/api/remove_task/:id', async (req, res) => {
+    await Task.findOneAndRemove({ _id: req.params.id });
+    res.send(req.params.id);
+  });
 };

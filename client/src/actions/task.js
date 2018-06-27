@@ -49,3 +49,15 @@ export const startEditTask = (_id, updates) => {
     dispatch(editTask(_id, { ...res.data }));
   };
 };
+
+const removeTask = ({ _id } = {}) => ({
+  type: 'REMOVE_TASK',
+  _id
+});
+
+export const startRemoveTask = ({ _id } = {}) => {
+  return async dispatch => {
+    await axios.delete(`/api/remove_task/${_id}`);
+    dispatch(removeTask({ _id }));
+  };
+};
