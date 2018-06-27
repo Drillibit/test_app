@@ -10,7 +10,7 @@ export default class MainForm extends Component {
     this.state = {
       taskName: props.taskName ? props.taskName : '',
       taskDescription: props.taskDescription ? props.taskDescription : '',
-      taskImportance: props.taskImportance ? props.taskImportance : '',
+      taskImportance: props.taskImportance ? props.taskImportance : 'regular',
       startDate: props.startDate ? moment(props.startDate) : moment(),
       deadline: props.deadline ? moment(props.deadline) : moment(),
       taskDone: props.taskDone !== false ? true : false,

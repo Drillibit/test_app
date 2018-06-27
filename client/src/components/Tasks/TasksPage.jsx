@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import SingleTask from './SingleTask';
+import filtered from '../../selector/select';
 
 const TasksPage = ({ tasks }) => {
   return (
@@ -12,7 +13,7 @@ const TasksPage = ({ tasks }) => {
 
 const mapStateToProps = state => {
   return {
-    tasks: state.tasks
+    tasks: filtered(state.tasks, state.filter)
   };
 };
 
