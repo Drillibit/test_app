@@ -12,6 +12,7 @@ module.exports = app => {
       taskImportance: req.body.taskImportance,
       deadline: req.body.deadline,
       startDate: req.body.startDate,
+      startHour: req.body.startHour,
       taskDone: req.body.taskDone
     });
     try {
@@ -34,10 +35,12 @@ module.exports = app => {
       (task.taskImportance = req.body.taskImportance || task.taskImportance),
       (task.deadline = req.body.deadline || task.deadline),
       (task.startDate = req.body.startDate || task.startDate),
+      (task.taskDoneDate = req.body.taskDoneDate || task.taskDoneDate),
       (task.taskDone =
         req.body.taskDone !== task.taskDone
           ? req.body.taskDone
           : task.taskDone);
+
     try {
       await task.save();
       res.send(task);

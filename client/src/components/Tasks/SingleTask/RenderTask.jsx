@@ -9,6 +9,9 @@ const RenderTask = ({
   deadline,
   handleEdit,
   dispatch,
+  handleTaskComplete,
+  taskComplete,
+  taskDoneDate,
   _id
 }) => {
   let date = new Date(deadline).toLocaleDateString().toString();
@@ -17,12 +20,14 @@ const RenderTask = ({
       <h3>{taskName}</h3>
       <p>{taskMissed ? 'Срок истёк' : 'Задача актульна'}</p>
       <p>{taskDescription}</p>
-      <p>{date}</p>
+      {(!taskComplete && <p>{date}</p>) || (
+        <p>{new Date(taskDoneDate).toLocaleString()}</p>
+      )}
       <input
         name="taskComplete"
         type="checkbox"
-        checked={this.taskComplete}
-        onChange={this.handleTaskComplete}
+        checked={taskComplete}
+        onChange={handleTaskComplete}
       />
       <button onClick={handleEdit}>Редактировать</button>
       <button

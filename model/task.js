@@ -7,7 +7,9 @@ const taskSchema = new Schema({
   taskImportance: String,
   deadline: Number,
   startDate: Number,
-  taskDone: Boolean
+  taskDone: Boolean,
+  taskDoneDate: Number,
+  noDeadLine: Boolean
 });
 
 mongoose.model('tasks', taskSchema);

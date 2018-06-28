@@ -13,6 +13,7 @@ export const startAddTask = (taskData = {}) => {
       taskImportance = '',
       deadline = 0,
       startDate = 0,
+      startHour = 0,
       taskDone = false
     } = taskData;
     const task = {
@@ -21,6 +22,7 @@ export const startAddTask = (taskData = {}) => {
       taskImportance,
       deadline,
       startDate,
+      startHour,
       taskDone
     };
 
@@ -43,6 +45,7 @@ export const startEditTask = (_id, updates) => {
       taskImportance: updates.taskImportance,
       deadline: updates.deadline,
       startDate: updates.startDate,
+      taskDoneDate: updates.taskDoneDate,
       taskDone: updates.taskDone
     };
     let res = await axios.put(`/api/edit_task/${_id}`, task);

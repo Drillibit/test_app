@@ -18,10 +18,10 @@ class SingleTask extends Component {
   }
 
   handleTaskComplete = e => {
-    let name = e.target.name;
     let value = e.target.checked;
     this.setState(() => ({
-      [name]: value
+      taskComplete: value,
+      taskDoneDate: currentDate
     }));
     const {
       taskName,
@@ -36,7 +36,8 @@ class SingleTask extends Component {
       taskImportance,
       deadline,
       startDate,
-      taskDone: !this.state.taskComplete
+      taskDone: !this.state.taskComplete,
+      taskDoneDate: currentDate
     };
     this.props.dispatch(startEditTask(this.props._id, updates));
   };
@@ -54,7 +55,11 @@ class SingleTask extends Component {
     return (
       <div className="single_task">
         {!this.state.editTask ? (
-          <RenderTask {...toRender} handleEdit={this.handleEdit} />
+          <RenderTask
+            {...toRender}
+            handleEdit={this.handleEdit}
+            handleTaskComplete={this.handleTaskComplete}
+          />
         ) : (
           <MainFrom
             {...toRender}

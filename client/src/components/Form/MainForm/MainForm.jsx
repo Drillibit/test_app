@@ -13,9 +13,10 @@ export default class MainForm extends Component {
       taskImportance: props.taskImportance ? props.taskImportance : 'regular',
       startDate: props.startDate ? moment(props.startDate) : moment(),
       deadline: props.deadline ? moment(props.deadline) : moment(),
-      taskDone: props.taskDone !== false ? true : false,
+      taskDone: props.taskDone === undefined ? false : props.taskDone,
       edit: false,
       dateFocused: false,
+      noDeadline: false,
       error: ''
     };
   }
@@ -67,9 +68,9 @@ export default class MainForm extends Component {
       taskName,
       taskDescription,
       taskImportance,
-      taskDone,
       deadline,
-      dateFocused
+      dateFocused,
+      noDeadline
     } = this.state;
 
     return (
@@ -100,21 +101,28 @@ export default class MainForm extends Component {
             <option value="important">Важная</option>
             <option value="highly_important">Очень важная</option>
           </select>
-          <label htmlFor="taskDone">Сделано</label>
+
+          <label htmlFor="noDeadline">Без срока</label>
           <input
-            name="taskDone"
+            name="noDeadline"
             type="checkbox"
-            checked={taskDone}
+            checked={noDeadline}
             onChange={this.onTextFieldChange}
           />
-          <label htmlFor="deadline">Срок выполнения</label>
-          <SingleDatePicker
-            date={deadline}
-            onDateChange={this.onDateChange}
-            focused={dateFocused}
-            onFocusChange={this.onFocusChange}
-            numberOfMonths={1}
-          />
+
+          {!noDeadline && (
+            <div>
+              <label htmlFor="deadline">Срок выполнения</label>
+              <SingleDatePicker
+                date={deadline}
+                onDateChange={this.onDateChange}
+                focused={dateFocused}
+                onFocusChange={this.onFocusChange}
+                numberOfMonths={1}
+              />
+            </div>
+          )}
+
           <button>Submit</button>
           {this.props.button}
         </form>
