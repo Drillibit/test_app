@@ -1,0 +1,45 @@
+.missed {
+    background-color: lightgray;
+    color: #fff;
+}
+
+.active {
+    background-color: #ccffcc;
+}
+
+.task_card {
+    padding: 10px;
+    border-radius: 2px;
+    margin: 1rem 0;
+}
+
+.btn_group {
+    display: flex;
+    justify-content: space-between;
+    margin: 1rem 0;
+}
+
+.card_btn {
+    border: none;
+    border-radius: 2px;
+    color: #fff;
+    font-weight: 200;
+    width: 40%;
+    font-size: 1.2rem;
+    box-shadow: 12px 15px 20px rgba(0, 0, 0, 0.1);
+    transition: 0.2s box-shadow ease-in-out, 0.2s background-color ease-in-out, 0.2s border-color ease-in-out;
+}
+
+.delete {
+    background-color: #eb3324;
+}
+
+.edit {
+    background-color: #02b3e4;
+}
+
+.card_btn:hover {
+    background: #148bb1;
+    color: #fff;
+    box-shadow: 2px 4px 8px 0 rgba(0, 0, 0, 0.1);
+}

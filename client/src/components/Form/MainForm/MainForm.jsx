@@ -57,7 +57,8 @@ export default class MainForm extends Component {
         taskImportance: this.state.taskImportance,
         deadline: this.state.deadline.valueOf(),
         startDate: this.state.startDate.valueOf(),
-        taskDone: this.state.taskDone
+        taskDone: this.state.taskDone,
+        noDeadline: this.state.noDeadline
       };
       this.props.onSubmit(task);
       this.props.done && this.props.done();
@@ -74,56 +75,61 @@ export default class MainForm extends Component {
     } = this.state;
 
     return (
-      <div className="">
-        <p>Task App Main Component</p>
+      <div className="form_container">
         <form onSubmit={this.onSubmit}>
-          <label htmlFor="taskName">Задача</label>
-          <input
-            type="text"
-            name="taskName"
-            value={taskName}
-            onChange={this.onTextFieldChange}
-          />
-          <label htmlFor="taskDescription">Описание</label>
-          <input
-            type="text"
-            name="taskDescription"
-            value={taskDescription}
-            onChange={this.onTextFieldChange}
-          />
-          <label htmlFor="taskImportance">Важность задачи</label>
-          <select
-            name="taskImportance"
-            value={taskImportance}
-            onChange={this.onTextFieldChange}
-          >
-            <option value="regular">Обычная</option>
-            <option value="important">Важная</option>
-            <option value="highly_important">Очень важная</option>
-          </select>
+          <div className="form_group">
+            <input
+              type="text"
+              name="taskName"
+              placeholder="Задача"
+              value={taskName}
+              onChange={this.onTextFieldChange}
+            />
+            <input
+              type="text"
+              name="taskDescription"
+              placeholder="Описане"
+              value={taskDescription}
+              onChange={this.onTextFieldChange}
+            />
+          </div>
+          <div className="form_group">
+            <label htmlFor="taskImportance">Важность задачи:</label>
+            <select
+              name="taskImportance"
+              value={taskImportance}
+              onChange={this.onTextFieldChange}
+            >
+              <option value="regular">Обычная</option>
+              <option value="important">Важная</option>
+              <option value="highly_important">Очень важная</option>
+            </select>
+          </div>
 
-          <label htmlFor="noDeadline">Без срока</label>
-          <input
-            name="noDeadline"
-            type="checkbox"
-            checked={noDeadline}
-            onChange={this.onTextFieldChange}
-          />
-
-          {!noDeadline && (
-            <div>
-              <label htmlFor="deadline">Срок выполнения</label>
-              <SingleDatePicker
-                date={deadline}
-                onDateChange={this.onDateChange}
-                focused={dateFocused}
-                onFocusChange={this.onFocusChange}
-                numberOfMonths={1}
+          <div className="form_group">
+            <label htmlFor="noDeadline">Без срока</label>
+            <div className="checkbox">
+              <input
+                name="noDeadline"
+                type="checkbox"
+                checked={noDeadline}
+                onChange={this.onTextFieldChange}
               />
             </div>
-          )}
+          </div>
 
-          <button>Submit</button>
+          <div className={`form_group ${noDeadline && `inactive`}`}>
+            <label htmlFor="deadline">Срок выполнения</label>
+            <SingleDatePicker
+              date={deadline}
+              onDateChange={this.onDateChange}
+              focused={dateFocused}
+              onFocusChange={this.onFocusChange}
+              numberOfMonths={1}
+            />
+          </div>
+
+          <button className="btn submit">Добавить</button>
           {this.props.button}
         </form>
       </div>

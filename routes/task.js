@@ -13,7 +13,8 @@ module.exports = app => {
       deadline: req.body.deadline,
       startDate: req.body.startDate,
       startHour: req.body.startHour,
-      taskDone: req.body.taskDone
+      taskDone: req.body.taskDone,
+      noDeadline: req.body.noDeadline
     });
     try {
       await task.save();
@@ -36,6 +37,10 @@ module.exports = app => {
       (task.deadline = req.body.deadline || task.deadline),
       (task.startDate = req.body.startDate || task.startDate),
       (task.taskDoneDate = req.body.taskDoneDate || task.taskDoneDate),
+      (task.noDeadline =
+        req.body.noDeadline !== task.noDeadline
+          ? req.body.noDeadline
+          : task.noDeadline),
       (task.taskDone =
         req.body.taskDone !== task.taskDone
           ? req.body.taskDone

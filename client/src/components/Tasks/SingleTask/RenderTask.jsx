@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { startRemoveTask } from '../../../actions/task';
 
@@ -12,32 +12,56 @@ const RenderTask = ({
   handleTaskComplete,
   taskComplete,
   taskDoneDate,
+  taskImportance,
+  noDeadline,
   _id
 }) => {
   let date = new Date(deadline).toLocaleDateString().toString();
+  const importance = () => {
+    switch (taskImportance) {
+      case 'important':
+        return 'важная';
+      case 'highly_important':
+        return 'очень важная';
+      default:
+        return 'обычная';
+    }
+  };
   return (
-    <Fragment>
-      <h3>{taskName}</h3>
+    <div className={`task_card ${taskMissed ? 'missed' : 'active'}`}>
+      <h3>
+        {taskName} {importance()}
+      </h3>
       <p>{taskMissed ? 'Срок истёк' : 'Задача актульна'}</p>
       <p>{taskDescription}</p>
-      {(!taskComplete && <p>{date}</p>) || (
-        <p>{new Date(taskDoneDate).toLocaleString()}</p>
+      {!noDeadline && (
+        <div>
+          {(!taskComplete && <p>{date}</p>) || (
+            <p>{new Date(taskDoneDate).toLocaleString()}</p>
+          )}
+        </div>
       )}
+      <label htmlFor="taskComplite">Задача выполнена</label>
       <input
         name="taskComplete"
         type="checkbox"
         checked={taskComplete}
         onChange={handleTaskComplete}
       />
-      <button onClick={handleEdit}>Редактировать</button>
-      <button
-        onClick={() => {
-          dispatch(startRemoveTask({ _id }));
-        }}
-      >
-        Удалить
-      </button>
-    </Fragment>
+      <div className="btn_group">
+        <button className="card_btn edit" onClick={handleEdit}>
+          Редактировать
+        </button>
+        <button
+          className="card_btn delete"
+          onClick={() => {
+            dispatch(startRemoveTask({ _id }));
+          }}
+        >
+          Удалить
+        </button>
+      </div>
+    </div>
   );
 };
 

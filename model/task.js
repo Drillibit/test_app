@@ -9,7 +9,7 @@ const taskSchema = new Schema({
   startDate: Number,
   taskDone: Boolean,
   taskDoneDate: Number,
-  noDeadLine: Boolean
+  noDeadline: Boolean
 });
 
 mongoose.model('tasks', taskSchema);

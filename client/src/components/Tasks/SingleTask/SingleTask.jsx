@@ -4,6 +4,7 @@ import { startEditTask } from '../../../actions/task';
 import RenderTask from './RenderTask';
 import MainFrom from '../../Form/MainForm';
 import moment from 'moment';
+import './SingleTask.css';
 
 let currentDate = moment().valueOf();
 
@@ -43,7 +44,6 @@ class SingleTask extends Component {
   };
 
   handleEdit = e => {
-    e.preventDefault();
     this.setState(() => ({
       editTask: !this.state.editTask
     }));

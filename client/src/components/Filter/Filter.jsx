@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { importanceFilter } from '../../actions/filters';
+import './Filter.css';
 
 class Filter extends Component {
   constructor(props) {
@@ -20,31 +21,30 @@ class Filter extends Component {
 
   render() {
     const fields = [
-      { value: 'all' },
-      { value: 'regular' },
-      { value: 'important' },
-      { value: 'highly_important' }
+      { value: 'all', label: 'Все' },
+      { value: 'regular', label: 'Обычные' },
+      { value: 'important', label: 'Важные' },
+      { value: 'highly_important', label: 'Очень важные' }
     ];
     return (
-      <form>
-        <div className="">
-          <p>Показать:</p>
-          {fields.map(field => {
-            let val = field.value;
-            return (
-              <Fragment key={val}>
-                <label>{val}</label>
-                <input
-                  name="importance"
-                  type="radio"
-                  value={val}
-                  checked={this.state.importance === val}
-                  onChange={this.handleInputChange}
-                />
-              </Fragment>
-            );
-          })}
-        </div>
+      <form className="form_container radio">
+        <p>Показать:</p>
+        {fields.map(field => {
+          let val = field.value;
+          let label = field.label;
+          return (
+            <Fragment key={val}>
+              <label>{label}</label>
+              <input
+                name="importance"
+                type="radio"
+                value={val}
+                checked={this.state.importance === val}
+                onChange={this.handleInputChange}
+              />
+            </Fragment>
+          );
+        })}
       </form>
     );
   }
